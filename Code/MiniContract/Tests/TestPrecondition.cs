@@ -12,26 +12,10 @@ namespace Tests
     public class TestPrecondition
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidContractException))]
-        public void Is_InvalidConditionNoMessage_DoesThrowException()
-        {
-            // Arrange & Act
-            Precondition.Is(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidContractException))]
-        public void Is_InvalidConditionWithMessage_DoesThrowException()
-        {
-            // Arrange & Act
-            Precondition.Is(null, "I am a test :)");
-        }
-
-        [TestMethod]
         public void Is_ConditionFulfilled_DoesNotThrowException()
         {
             // Arrange & Act
-            Precondition.Is(() => true);
+            Precondition.Is(true);
         }
 
         [TestMethod]
@@ -39,7 +23,7 @@ namespace Tests
         public void Is_ConditionNotFulfilled_DoesThrowException()
         {
             // Arrange & Act
-            Precondition.Is(() => false);
+            Precondition.Is(false);
         }
 
         [TestMethod]
@@ -52,7 +36,7 @@ namespace Tests
             // Act
             try
             {
-                Precondition.Is(() => false, "Test message");
+                Precondition.Is(false, "Test message");
             }
             catch (Exception ex)
             {

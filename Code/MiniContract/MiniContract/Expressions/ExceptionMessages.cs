@@ -8,17 +8,17 @@ namespace MiniContract.Expressions
      * Can't do that, because it would generate an endless recursion. */
     internal static class ExceptionMessages
     {
-        public const string MissingContract = "An invalid contract has been defined. The condition must not be null.";
-
         public const string NullValue = "Object value must not be null.";
+
+        public const string EmptyCollection = "The checked collection was null itself.";
+
+        public const string ConditionNotSatisfied = "The condition was not satisfied.";
 
         public static string NullOrDefault<T>()
         {
             string nullOrDefault = DetermineNullOrDefault<T>();
             return string.Format("Object value {0}.", nullOrDefault);
         }
-
-        public static string EmptyCollection = "The checked collection was null itself.";
 
         public static string ElementNullOrDefault<T>(IEnumerable<T> enumerable, int nullOrDefaultCount)
         {

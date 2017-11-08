@@ -10,75 +10,10 @@ namespace Tests
     public class TestPostcondition
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidContractException))]
-        public void Is_InvalidConditionNoMessage_DoesThrowException()
-        {
-            // Arrange & Act
-            Postcondition.Is(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidContractException))]
-        public void Is_InvalidConditionWithMessage_DoesThrowException()
-        {
-            // Arrange & Act
-            Postcondition.Is(null, "I am a test :)");
-        }
-
-        [TestMethod]
         public void Is_ConditionFulfilled_DoesNotThrowException()
         {
             // Arrange & Act
-            Postcondition.Is(() => true);
-        }
-
-
-        [TestMethod]
-        public void IsWithValue_InvalidConditionNoMessage_DoesThrowException()
-        {
-            // Arrange
-            object original = new object();
-            object returnedValue = null;
-
-            InvalidContractException exception = null;
-
-            // Act
-            try
-            {
-                returnedValue = Postcondition.Is(original, null);
-            }
-            catch (InvalidContractException e)
-            {
-                exception = e;
-            }
-            
-            // Assert
-            Check.That(exception).IsNotNull();
-            Check.That(returnedValue).IsNull();
-        }
-
-        [TestMethod]
-        public void IsWithValue_InvalidConditionWithMessage_DoesThrowException()
-        {
-            // Arrange
-            object original = new object();
-            object returnedValue = null;
-
-            InvalidContractException exception = null;
-
-            // Act
-            try
-            {
-                returnedValue = Postcondition.Is(original, null, "I'm gonna blow up :(.");
-            }
-            catch (InvalidContractException e)
-            {
-                exception = e;
-            }
-
-            // Assert
-            Check.That(exception).IsNotNull();
-            Check.That(returnedValue).IsNull();
+            Postcondition.Is(true);
         }
 
         [TestMethod]
@@ -88,7 +23,7 @@ namespace Tests
             object original = new object();
 
             // Act
-            var returnedValue = Postcondition.Is(original, () => true);
+            var returnedValue = Postcondition.Is(original, true);
 
             // Arrange
             Check.That(returnedValue).IsSameReferenceAs(original);
@@ -101,7 +36,7 @@ namespace Tests
             object original = new object();
 
             // Act
-            var returnedValue = Postcondition.Is(original, () => true, "I will survive :).");
+            var returnedValue = Postcondition.Is(original, true, "I will survive :).");
 
             // Arrange
             Check.That(returnedValue).IsSameReferenceAs(original);
@@ -112,7 +47,7 @@ namespace Tests
         public void Is_ConditionNotFulfilled_DoesThrowException()
         {
             // Arrange & Act
-            Postcondition.Is(() => false);
+            Postcondition.Is(false);
         }
 
         [TestMethod]
@@ -125,7 +60,7 @@ namespace Tests
             // Act
             try
             {
-                Postcondition.Is(() => false, "Test message");
+                Postcondition.Is(false, "Test message");
             }
             catch (Exception ex)
             {

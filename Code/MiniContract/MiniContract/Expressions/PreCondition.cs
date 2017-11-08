@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MiniContract.Exceptions;
 
 namespace MiniContract.Expressions
@@ -7,19 +6,14 @@ namespace MiniContract.Expressions
     // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
     public static class Precondition
     {
-        public static void Is(Func<bool> condition, string message = null)
+        public static void Is(bool condition, string message = null)
         {
-            if (condition == null)
-            {
-                throw new InvalidContractException(ExceptionMessages.MissingContract);
-            }
-
-            if (!condition())
+            if (!condition)
             {
                 if (message != null)
                     throw new PreconditionViolatedException(message);
 
-                throw new PreconditionViolatedException(condition);
+                throw new PreconditionViolatedException(ExceptionMessages.ConditionNotSatisfied);
             }
         }
         

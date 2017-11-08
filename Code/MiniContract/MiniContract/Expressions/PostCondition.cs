@@ -5,38 +5,28 @@ namespace MiniContract.Expressions
     // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Global
     public static class Postcondition
     {
-        public static void Is(Func<bool> condition, string message = null)
+        public static void Is(bool condition, string message = null)
         {
-            if (condition == null)
-            {
-                throw new InvalidContractException(ExceptionMessages.MissingContract);
-            }
-
-            if (condition()) return;
+            if (condition) return;
 
             if (message != null)
             {
                 throw new PostConditionViolatedException(message);
             }
 
-            throw new PostConditionViolatedException(condition);
+            throw new PostConditionViolatedException(ExceptionMessages.ConditionNotSatisfied);
         }
 
-        public static T Is<T>(T value, Func<bool> condition, string message = null)
+        public static T Is<T>(T value, bool condition, string message = null)
         {
-            if (condition == null)
-            {
-                throw new InvalidContractException(ExceptionMessages.MissingContract);
-            }
-
-            if (condition()) return value;
+            if (condition) return value;
 
             if (message != null)
             {
                 throw new PostConditionViolatedException(message);
             }
 
-            throw new PostConditionViolatedException(condition);
+            throw new PostConditionViolatedException(ExceptionMessages.ConditionNotSatisfied);
         }
         
         public static T NotNull<T>(T reference) where T : class 
