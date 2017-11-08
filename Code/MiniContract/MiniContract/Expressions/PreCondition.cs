@@ -23,7 +23,7 @@ namespace MiniContract.Expressions
             }
         }
         
-        public static void NotNullOrDefault<T>(T value)
+        public static void NotDefault<T>(T value)
         {
             if (value == null)
             {

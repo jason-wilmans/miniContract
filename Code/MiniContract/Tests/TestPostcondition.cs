@@ -32,6 +32,81 @@ namespace Tests
             Postcondition.Is(() => true);
         }
 
+
+        [TestMethod]
+        public void IsWithValue_InvalidConditionNoMessage_DoesThrowException()
+        {
+            // Arrange
+            object original = new object();
+            object returnedValue = null;
+
+            InvalidContractException exception = null;
+
+            // Act
+            try
+            {
+                returnedValue = Postcondition.Is(original, null);
+            }
+            catch (InvalidContractException e)
+            {
+                exception = e;
+            }
+            
+            // Assert
+            Check.That(exception).IsNotNull();
+            Check.That(returnedValue).IsNull();
+        }
+
+        [TestMethod]
+        public void IsWithValue_InvalidConditionWithMessage_DoesThrowException()
+        {
+            // Arrange
+            object original = new object();
+            object returnedValue = null;
+
+            InvalidContractException exception = null;
+
+            // Act
+            try
+            {
+                returnedValue = Postcondition.Is(original, null, "I'm gonna blow up :(.");
+            }
+            catch (InvalidContractException e)
+            {
+                exception = e;
+            }
+
+            // Assert
+            Check.That(exception).IsNotNull();
+            Check.That(returnedValue).IsNull();
+        }
+
+        [TestMethod]
+        public void IsWithValue_ConditionFulfilled_DoesNotThrowException()
+        {
+            // Arrange
+            object original = new object();
+
+            // Act
+            var returnedValue = Postcondition.Is(original, () => true);
+
+            // Arrange
+            Check.That(returnedValue).IsSameReferenceAs(original);
+        }
+
+        [TestMethod]
+        public void IsWithValue_ConditionFulfilledAndMessage_DoesNotThrowException()
+        {
+            // Arrange
+            object original = new object();
+
+            // Act
+            var returnedValue = Postcondition.Is(original, () => true, "I will survive :).");
+
+            // Arrange
+            Check.That(returnedValue).IsSameReferenceAs(original);
+        }
+
         [TestMethod]
         [ExpectedException(typeof(PostConditionViolatedException))]
         public void Is_ConditionNotFulfilled_DoesThrowException()
@@ -67,16 +142,38 @@ namespace Tests
         [TestMethod]
         public void NotNull_ObjectNotNull_DoesNotThrowException()
         {
-            // Arrange & Act
-            Postcondition.NotNull(new object());
+            // Arrange
+            var reference = new object();
+
+            // Act
+            var returnedValue = Postcondition.NotNull(reference);
+
+            // Assert
+            Check.That(returnedValue).IsSameReferenceAs(reference);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(PostConditionViolatedException))]
         public void NotNull_ObjectNull_DoesThrowException()
         {
-            // Arrange & Act
-            Postcondition.NotNull(null);
+            // Arrange
+            object reference = null;
+            object returnedValue = null;
+
+            PostConditionViolatedException exception = null;
+
+            // Act
+            try
+            {
+                returnedValue = Postcondition.NotNull(reference);
+            }
+            catch (PostConditionViolatedException e)
+            {
+                exception = e;
+            }
+
+            // Assert
+            Check.That(exception).IsNotNull();
+            Check.That(returnedValue).IsNull();
         }
     }
 }

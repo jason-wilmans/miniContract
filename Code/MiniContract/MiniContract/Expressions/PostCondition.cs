@@ -21,11 +21,30 @@ namespace MiniContract.Expressions
 
             throw new PostConditionViolatedException(condition);
         }
+
+        public static T Is<T>(T value, Func<bool> condition, string message = null)
+        {
+            if (condition == null)
+            {
+                throw new InvalidContractException(ExceptionMessages.MissingContract);
+            }
+
+            if (condition()) return value;
+
+            if (message != null)
+            {
+                throw new PostConditionViolatedException(message);
+            }
+
+            throw new PostConditionViolatedException(condition);
+        }
         
-        public static void NotNull(object reference)
+        public static T NotNull<T>(T reference) where T : class 
         {
             if (reference == null)
                 throw new PostConditionViolatedException(ExceptionMessages.NullValue);
+
+            return reference;
         }
     }
 }

@@ -67,21 +67,37 @@ namespace Tests
         }
 
         [TestMethod]
-        public void NotNullOrDefault_ObjectNotNull_DoesNotThrowException()
+        public void NotDefault_ObjectNotNull_DoesNotThrowException()
         {
             // Arrange & Act
-            Precondition.NotNullOrDefault(new object());
+            Precondition.NotDefault(new object());
+        }
+
+        [TestMethod]
+        public void NotDefault_ValueNotDefault_DoesNotThrowException()
+        {
+            // Arrange & Act
+            Precondition.NotDefault(42);
         }
 
         [TestMethod]
         [ExpectedException(typeof(PreconditionViolatedException))]
-        public void NotNullOrDefault_ObjectNull_DoesThrowException()
+        public void NotDefault_ValueDefault_DoesThrowException()
+        {
+            // Arrange & Act
+            Precondition.NotDefault(0);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(PreconditionViolatedException))]
+        public void NotDefault_ObjectNull_DoesThrowException()
         {
             // Arrange
             object test = null;
 
             // Act
-            Precondition.NotNullOrDefault(test);
+            Precondition.NotDefault(test);
         }
 
         [TestMethod]
@@ -131,6 +147,36 @@ namespace Tests
         {
             // Arrange
             IEnumerable<int> elements = new List<int>();
+
+            // Act
+            Precondition.ElementsNotNullOrDefault(elements);
+        }
+
+        [TestMethod]
+        public void ElementsNotNullOrDefault_ValidReferences_DoesNotThrowException()
+        {
+            // Arrange
+            IEnumerable<object> elements = new List<object>
+            {
+                new object(),
+                new object(),
+                new object()
+            };
+
+            // Act
+            Precondition.ElementsNotNullOrDefault(elements);
+        }
+
+        [TestMethod]
+        public void ElementsNotNullOrDefault_ValidValueTypes_DoesNotThrowException()
+        {
+            // Arrange
+            IEnumerable<int> elements = new List<int>
+            {
+                1,
+                2,
+                3
+            };
 
             // Act
             Precondition.ElementsNotNullOrDefault(elements);
