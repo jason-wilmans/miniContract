@@ -48,7 +48,7 @@ namespace MiniContract.Expressions
         public static void ElementsNotNullOrDefault<T>(IEnumerable<T> elements)
         {
             if (elements == null)
-                throw new InvalidContractException(ExceptionMessages.EmptyCollection);
+                throw new PreconditionViolatedException(ExceptionMessages.EmptyCollection);
 
             int nullOrDefaultCount = 0;
             foreach (T element in elements)
@@ -59,7 +59,10 @@ namespace MiniContract.Expressions
                 }
             }
 
-            throw new PreconditionViolatedException(ExceptionMessages.ElementNullOrDefault(elements, nullOrDefaultCount));
+            if (nullOrDefaultCount > 0)
+            {
+                throw new PreconditionViolatedException(ExceptionMessages.ElementNullOrDefault(elements, nullOrDefaultCount));
+            }
         }
     }
 }

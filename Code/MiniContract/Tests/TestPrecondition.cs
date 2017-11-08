@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniContract.Expressions;
 using MiniContract.Exceptions;
@@ -102,6 +103,94 @@ namespace Tests
 
             // Act
             Precondition.NotNull(test);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PreconditionViolatedException))]
+        public void ElementsNotNullOrDefault_CollectionNull_DoesThrowException()
+        {
+            // Arrange
+            IEnumerable<object> elements = null;
+
+            // Act
+            Precondition.ElementsNotNullOrDefault(elements);
+        }
+
+        [TestMethod]
+        public void ElementsNotNullOrDefault_EmptyReferenceCollection_DoesNotThrowException()
+        {
+            // Arrange
+            IEnumerable<object> elements = new List<object>();
+
+            // Act
+            Precondition.ElementsNotNullOrDefault(elements);
+        }
+
+        [TestMethod]
+        public void ElementsNotNullOrDefault_EmptyValueTypeCollection_DoesNotThrowException()
+        {
+            // Arrange
+            IEnumerable<int> elements = new List<int>();
+
+            // Act
+            Precondition.ElementsNotNullOrDefault(elements);
+        }
+
+        [TestMethod]
+        public void ElementsNotNullOrDefault_OneNullElement_DoesThrowException()
+        {
+            // Arrange
+            IEnumerable<object> elements = new List<object>
+            {
+                new object(),
+                null
+            };
+
+            PreconditionViolatedException exception = null;
+
+            // Act
+            try
+            {
+                Precondition.ElementsNotNullOrDefault(elements);
+            }
+            catch (PreconditionViolatedException e)
+            {
+                exception = e;
+            }
+
+            // Assert
+            Check.That(exception).IsNotNull();
+            Check.That(exception.Message).Contains("1 element");
+        }
+
+        [TestMethod]
+        public void ElementsNotNullOrDefault_TwoDefaultValues_DoesThrowException()
+        {
+            // Arrange
+            IEnumerable<int> elements = new List<int>
+            {
+                0,
+                42,
+                72,
+                6,
+                0
+            };
+
+            PreconditionViolatedException exception = null;
+
+            // Act
+            try
+            {
+                Precondition.ElementsNotNullOrDefault(elements);
+            }
+            catch (PreconditionViolatedException e)
+            {
+                exception = e;
+            }
+
+            // Assert
+            Check.That(exception).IsNotNull();
+            Check.That(exception.Message).Contains("2 elements");
         }
     }
 }
