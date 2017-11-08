@@ -1,17 +1,10 @@
-﻿// <copyright file="TestPrecondition.cs" year="2017" owner="Fritz Oscar S. Berngruber & Jason Wilmans" email="fw.project@gmx.de">
-// All rights are reserved. Reproduction or transmission in whole or in part, in
-// any form or by any means, electronic, mechanical or otherwise, is prohibited
-// without the prior written consent of the copyright owner.
-// </copyright>
-
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniContract.Expressions;
 using MiniContract.Exceptions;
 using NFluent;
 
 // ReSharper disable ExpressionIsAlwaysNull
-
 namespace Tests
 {
     [TestClass]
