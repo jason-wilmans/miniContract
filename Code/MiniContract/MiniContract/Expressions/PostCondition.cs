@@ -9,27 +9,23 @@ using MiniContract.Exceptions;
 
 namespace MiniContract.Expressions
 {
-    public static class PostCondition
+    public static class Postcondition
     {
         public static void Is(Func<bool> condition, string message = null)
         {
-#if DEBUG
-            if (!condition())
-            {
-                if (message != null)
-                    throw new PostConditionViolatedException(message);
+            if (condition()) return;
 
-                throw new PostConditionViolatedException(condition);
-            }
-#endif
+            if (message != null)
+                throw new PostConditionViolatedException(message);
+
+            throw new PostConditionViolatedException(condition);
         }
 
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Global
         public static void NotNull(object reference)
         {
-#if DEBUG
             if (reference == null)
                 throw new PostConditionViolatedException("Object reference was null.");
-#endif
         }
     }
 }

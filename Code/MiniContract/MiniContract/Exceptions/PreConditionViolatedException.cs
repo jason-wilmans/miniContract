@@ -16,7 +16,8 @@ namespace MiniContract.Exceptions
         {
         }
 
-        public PreconditionViolatedException(string message) : base(message)
+        public PreconditionViolatedException(string message)
+            : base(message)
         {
         }
 
@@ -25,7 +26,8 @@ namespace MiniContract.Exceptions
             _precondition = precondition;
         }
 
-        public PreconditionViolatedException(string message, Exception innerException) : base(message, innerException)
+        public PreconditionViolatedException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
     }
