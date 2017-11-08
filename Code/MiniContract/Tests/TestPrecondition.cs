@@ -11,7 +11,23 @@ namespace Tests
     public class TestPrecondition
     {
         [TestMethod]
-        public void PreIs_ConditionFulfilled_DoesNotThrowException()
+        [ExpectedException(typeof(InvalidContractException))]
+        public void Is_InvalidConditionNoMessage_DoesThrowException()
+        {
+            // Arrange & Act
+            Precondition.Is(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidContractException))]
+        public void Is_InvalidConditionWithMessage_DoesThrowException()
+        {
+            // Arrange & Act
+            Precondition.Is(null, "I am a test :)");
+        }
+
+        [TestMethod]
+        public void Is_ConditionFulfilled_DoesNotThrowException()
         {
             // Arrange & Act
             Precondition.Is(() => true);
@@ -19,14 +35,14 @@ namespace Tests
 
         [TestMethod]
         [ExpectedException(typeof(PreconditionViolatedException))]
-        public void PreIs_ConditionNotFulfilled_DoesThrowException()
+        public void Is_ConditionNotFulfilled_DoesThrowException()
         {
             // Arrange & Act
             Precondition.Is(() => false);
         }
 
         [TestMethod]
-        public void PreIs_ConditionNotFulfilledWithMessage_DoesThrowException()
+        public void Is_ConditionNotFulfilledWithMessage_DoesThrowException()
         {
             // Arrange
             bool exceptionThrown = false;
@@ -50,7 +66,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void PreNotNull_ObjectNotNull_DoesNotThrowException()
+        public void NotNullOrDefault_ObjectNotNull_DoesNotThrowException()
         {
             // Arrange & Act
             Precondition.NotNullOrDefault(new object());
@@ -58,7 +74,7 @@ namespace Tests
 
         [TestMethod]
         [ExpectedException(typeof(PreconditionViolatedException))]
-        public void PreNotNull_ObjectNull_DoesThrowException()
+        public void NotNullOrDefault_ObjectNull_DoesThrowException()
         {
             // Arrange
             object test = null;
@@ -67,5 +83,25 @@ namespace Tests
             Precondition.NotNullOrDefault(test);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(PreconditionViolatedException))]
+        public void NotNull_ObjectNull_DoesThrowException()
+        {
+            // Arrange
+            object test = null;
+
+            // Act
+            Precondition.NotNull(test);
+        }
+
+        [TestMethod]
+        public void NotNull_ObjectNotNull_DoesNotThrowException()
+        {
+            // Arrange
+            object test = new object();
+
+            // Act
+            Precondition.NotNull(test);
+        }
     }
 }

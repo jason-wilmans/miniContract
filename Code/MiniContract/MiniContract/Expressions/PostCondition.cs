@@ -7,10 +7,17 @@ namespace MiniContract.Expressions
     {
         public static void Is(Func<bool> condition, string message = null)
         {
+            if (condition == null)
+            {
+                throw new InvalidContractException(ExceptionMessages.MissingContract);
+            }
+
             if (condition()) return;
 
             if (message != null)
+            {
                 throw new PostConditionViolatedException(message);
+            }
 
             throw new PostConditionViolatedException(condition);
         }
@@ -18,7 +25,7 @@ namespace MiniContract.Expressions
         public static void NotNull(object reference)
         {
             if (reference == null)
-                throw new PostConditionViolatedException("Object reference was null.");
+                throw new PostConditionViolatedException(ExceptionMessages.NullValue);
         }
     }
 }

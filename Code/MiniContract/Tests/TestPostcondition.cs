@@ -9,9 +9,24 @@ namespace Tests
     [TestClass]
     public class TestPostcondition
     {
+        [TestMethod]
+        [ExpectedException(typeof(InvalidContractException))]
+        public void Is_InvalidConditionNoMessage_DoesThrowException()
+        {
+            // Arrange & Act
+            Postcondition.Is(null);
+        }
 
         [TestMethod]
-        public void PostIs_ConditionFulfilled_DoesNotThrowException()
+        [ExpectedException(typeof(InvalidContractException))]
+        public void Is_InvalidConditionWithMessage_DoesThrowException()
+        {
+            // Arrange & Act
+            Postcondition.Is(null, "I am a test :)");
+        }
+
+        [TestMethod]
+        public void Is_ConditionFulfilled_DoesNotThrowException()
         {
             // Arrange & Act
             Postcondition.Is(() => true);
@@ -19,14 +34,14 @@ namespace Tests
 
         [TestMethod]
         [ExpectedException(typeof(PostConditionViolatedException))]
-        public void PostIs_ConditionNotFulfilled_DoesThrowException()
+        public void Is_ConditionNotFulfilled_DoesThrowException()
         {
             // Arrange & Act
             Postcondition.Is(() => false);
         }
 
         [TestMethod]
-        public void PostIs_ConditionNotFulfilledWithMessage_DoesThrowException()
+        public void Is_ConditionNotFulfilledWithMessage_DoesThrowException()
         {
             // Arrange
             bool exceptionThrown = false;
@@ -50,7 +65,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void PostNotNull_ObjectNotNull_DoesNotThrowException()
+        public void NotNull_ObjectNotNull_DoesNotThrowException()
         {
             // Arrange & Act
             Postcondition.NotNull(new object());
@@ -58,7 +73,7 @@ namespace Tests
 
         [TestMethod]
         [ExpectedException(typeof(PostConditionViolatedException))]
-        public void PostNotNull_ObjectNull_DoesThrowException()
+        public void NotNull_ObjectNull_DoesThrowException()
         {
             // Arrange & Act
             Postcondition.NotNull(null);
