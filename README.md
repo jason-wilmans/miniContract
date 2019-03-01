@@ -1,4 +1,5 @@
-#miniContract
+![](Media/icon64.png)
+miniContract
 ===================
 
 miniContract is a ultra light-weight library to express code contracts in .NET. It exists, because it's developers switched to Visual Studio 2017 and needed a simple solution to replace Code Contracts. It is extremely KISS. In fact it consists of merely five classes.
