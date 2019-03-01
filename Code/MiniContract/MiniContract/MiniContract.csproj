@@ -14,7 +14,8 @@
     <PackageProjectUrl>https://github.com/jason-wilmans/miniContract</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jason-wilmans/miniContract</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/jason-wilmans/miniContract/blob/master/license.txt</PackageLicenseUrl>
+    <Copyright>Copyright (C) 2019 Jason Thomas Wilmans, Fritz-Oscar Berngruber</Copyright>
   </PropertyGroup>
 
 </Project>
